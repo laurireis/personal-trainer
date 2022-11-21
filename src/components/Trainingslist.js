@@ -4,17 +4,41 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 import moment from 'moment';
 import 'moment-timezone';
+import { IconButton } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import Snackbar from '@mui/material/Snackbar';
 
 export default function Trainingslist() {
     const [trainings, setTrainings] = useState([]);
+    const [open, setOpen] = useState(false);
 
     useEffect(() => fetchTrainings(), []);
+
+    const handleClick = () => {
+        setOpen(true);
+    }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    }
 
     const fetchTrainings = () => {
         fetch('https://customerrest.herokuapp.com/gettrainings')
         .then(response => response.json())
         .then(data => setTrainings(data))
         .catch(err => console.error(err))
+    }
+
+    const deleteTraining  = (id) => {
+        if (window.confirm('Are you sure?')) {
+            fetch('https://customerrest.herokuapp.com/api/trainings/' + id, {method: 'DELETE'})
+            .then(res => fetchTrainings())
+            .catch(err => console.error(err))
+            handleClick();
+        }
     }
 
     const dateFormatter = (params) => {
@@ -64,6 +88,16 @@ export default function Trainingslist() {
             floatingFilter: true,
             resizable: true
         },
+        {
+            headerName: '',
+            field: 'id',
+            width: 70,
+            cellRendererFramework: params =>
+                <IconButton color="secondary" onClick={() => deleteTraining(params.value)}>
+                    <DeleteIcon />
+                </IconButton>
+
+        }
     ]
 
     const gridOptions = {
@@ -86,6 +120,13 @@ export default function Trainingslist() {
                     gridOptions={gridOptions}
                 />
             </div>  
+            <Snackbar
+                open={open}
+                autoHideDuration={5000}
+                onClose={handleClose}
+                message='Training deleted'
+                action={deleteTraining}
+            />
         </div>
     );
 }
