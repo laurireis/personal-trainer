@@ -92,7 +92,7 @@ export default function Trainingslist() {
             headerName: '',
             field: 'id',
             width: 70,
-            cellRendererFramework: params =>
+            cellRenderer: params =>
                 <IconButton color="secondary" onClick={() => deleteTraining(params.value)}>
                     <DeleteIcon />
                 </IconButton>

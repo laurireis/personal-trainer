@@ -8,6 +8,7 @@ import { IconButton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditCustomer from "./EditCustomer";
 import AddTraining from "./AddTraining";
+import CSVExporter from "./CSVExporter";
 
 export default function Customerlist() {
     const [customers, setCustomers] = useState([]);
@@ -134,7 +135,7 @@ export default function Customerlist() {
             headerName: '',
             width: 70,
             valueGetter: (params) => params.data.links[0].href,
-            cellRendererFramework: params =>
+            cellRenderer: params =>
                 <EditCustomer customer={params.data} url={params.value} editCustomer={editCustomer} />
         },
         {
@@ -142,7 +143,7 @@ export default function Customerlist() {
             field: 'link',
             width: 70,
             valueGetter: (params) => params.data.links[0].href,
-            cellRendererFramework: params =>
+            cellRenderer: params =>
                 <IconButton color="secondary" onClick={() => deleteCustomer(params.value)}>
                     <DeleteIcon />
                 </IconButton>
@@ -160,6 +161,7 @@ export default function Customerlist() {
 
     return (
         <div>
+            <CSVExporter customers={customers} />
             <AddCustomer saveCustomer={saveCustomer} />
             <AddTraining
                 url={selection.links?.[0].href}
