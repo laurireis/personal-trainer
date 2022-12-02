@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -31,73 +31,73 @@ export default function AddCustomer(props) {
 
     return (
         <div>
-            <Button style={{margin: '10px 10px 0px 10px'}} variant="outlined" color="primary" onClick={handleClickOpen}>Add Customer</Button>
+            <Button style={{ margin: '10px 10px 0px 10px' }} variant='outlined' color='primary' onClick={handleClickOpen}>Add Customer</Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New Customer</DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus
-                        margin="dense"
-                        name="firstname"
+                        margin='dense'
+                        name='firstname'
                         value={customer.firstname}
                         onChange={e => handleInputChange(e)}
-                        label="First name"
+                        label='First name'
                         fullWidth
-                        variant="standard"
+                        variant='standard'
                     />
                     <TextField
-                        margin="dense"
-                        name="lastname"
+                        margin='dense'
+                        name='lastname'
                         value={customer.lastname}
                         onChange={e => handleInputChange(e)}
-                        label="Last name"
+                        label='Last name'
                         fullWidth
-                        variant="standard"
+                        variant='standard'
                     />
                     <TextField
-                        margin="dense"
-                        name="streetaddress"
+                        margin='dense'
+                        name='streetaddress'
                         value={customer.streetaddress}
                         onChange={e => handleInputChange(e)}
-                        label="Street address"
+                        label='Street address'
                         fullWidth
-                        variant="standard"
+                        variant='standard'
                     />
                     <TextField
-                        margin="dense"
-                        name="postcode"
+                        margin='dense'
+                        name='postcode'
                         value={customer.postcode}
                         onChange={e => handleInputChange(e)}
-                        label="Postcode"
+                        label='Postcode'
                         fullWidth
-                        variant="standard"
+                        variant='standard'
                     />
                     <TextField
-                        margin="dense"
-                        name="city"
+                        margin='dense'
+                        name='city'
                         value={customer.city}
                         onChange={e => handleInputChange(e)}
-                        label="City"
+                        label='City'
                         fullWidth
-                        variant="standard"
+                        variant='standard'
                     />
                     <TextField
-                        margin="dense"
-                        name="email"
+                        margin='dense'
+                        name='email'
                         value={customer.email}
                         onChange={e => handleInputChange(e)}
-                        label="Email"
+                        label='Email'
                         fullWidth
-                        variant="standard"
+                        variant='standard'
                     />
                     <TextField
-                        margin="dense"
-                        name="phone"
+                        margin='dense'
+                        name='phone'
                         value={customer.phone}
                         onChange={e => handleInputChange(e)}
-                        label="Phone number"
+                        label='Phone number'
                         fullWidth
-                        variant="standard"
+                        variant='standard'
                     />
                 </DialogContent>
                 <DialogActions>

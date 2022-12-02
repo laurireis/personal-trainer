@@ -1,4 +1,4 @@
-import { CSVLink } from "react-csv";
+import { CSVLink } from 'react-csv';
 import Button from '@mui/material/Button';
 
 export default function CSVExporter(props) {
@@ -17,10 +17,10 @@ export default function CSVExporter(props) {
             <CSVLink
                 data={props.customers}
                 headers={headers}
-                filename={"customers.csv"}
-                target="_blank"
+                filename={'customers.csv'}
+                target='_blank'
             >
-                <Button variant="outlined">Download .CSV</Button>
+                <Button style={{ margin: '10px 10px 0px 10px' }} variant='outlined'>Download .CSV</Button>
             </CSVLink>
         </div>
     );

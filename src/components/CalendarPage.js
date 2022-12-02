@@ -1,12 +1,15 @@
-import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useEffect, useState } from 'react';
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import listPlugin from '@fullcalendar/list';
+
 
 export default function CalendarPage() {
     const [events, setEvents] = useState([]);
-    const localizer = momentLocalizer(moment);
 
+    // eslint-disable-next-line
     useEffect(() => fetchTrainings(), []);
 
     const fetchTrainings = () => {
@@ -29,12 +32,23 @@ export default function CalendarPage() {
     
     return (
         <div>
-            <Calendar
-                localizer={localizer}
+            <FullCalendar
+                plugins={[ dayGridPlugin, timeGridPlugin, listPlugin ]}
                 events={events}
-                startAccessor="start"
-                endAccessor="end"
-                style={{ height: 500 }}
+                initialView='dayGridMonth'
+                headerToolbar={{
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                  }}
+                firstDay='1'
+                height={700}
+                timeZone='UTC'
+                eventTimeFormat={{
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: false
+                }}
             />
         </div>
     );

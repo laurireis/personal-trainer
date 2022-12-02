@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
-import AddCustomer from "./AddCustomer";
+import AddCustomer from './AddCustomer';
 import Snackbar from '@mui/material/Snackbar';
-import { IconButton } from "@mui/material";
+import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditCustomer from "./EditCustomer";
-import AddTraining from "./AddTraining";
-import CSVExporter from "./CSVExporter";
+import EditCustomer from './EditCustomer';
+import AddTraining from './AddTraining';
+import CSVExporter from './CSVExporter';
 
 export default function Customerlist() {
     const [customers, setCustomers] = useState([]);
@@ -78,7 +78,7 @@ export default function Customerlist() {
             headers: { 'Content-type': 'application/json' }
           })
           .then(res => {
-            setSnackMessage("Training added");
+            setSnackMessage('Training added');
             setOpen(true);
           })
           .catch(err => console.error(err))
@@ -103,8 +103,7 @@ export default function Customerlist() {
             valueGetter: fullName,
             sortable: true,
             filter: true,
-            floatingFilter: true,
-            resizable: true
+            floatingFilter: true
         },
         {
             headerName: 'Address',
@@ -112,16 +111,14 @@ export default function Customerlist() {
             valueGetter: fullAddress,
             sortable: true,
             filter: true,
-            floatingFilter: true,
-            resizable: true
+            floatingFilter: true
         },
         {
             headerName: 'Email',
             field: 'email',
             sortable: true,
             filter: true,
-            floatingFilter: true,
-            resizable: true
+            floatingFilter: true
         },
         {
             headerName: 'Phone number',
@@ -129,7 +126,8 @@ export default function Customerlist() {
             sortable: true,
             filter: true,
             floatingFilter: true,
-            resizable: true
+            suppressSizeToFit: true,
+            width: 170
         },
         {
             headerName: '',
@@ -144,7 +142,7 @@ export default function Customerlist() {
             width: 70,
             valueGetter: (params) => params.data.links[0].href,
             cellRenderer: params =>
-                <IconButton color="secondary" onClick={() => deleteCustomer(params.value)}>
+                <IconButton color='secondary' onClick={() => deleteCustomer(params.value)}>
                     <DeleteIcon />
                 </IconButton>
 
@@ -155,24 +153,28 @@ export default function Customerlist() {
         columnDefs: columns,
         animateRows: true,
         rowSelection: 'single',
+        pagination: true,
+        paginationPageSize: 15,
+        domLayout: 'autoHeight',
         onGridReady: _ => sizeToFit(),
         onRowClicked: event => setSelection(event.data)
     }
 
     return (
         <div>
-            <CSVExporter customers={customers} />
-            <AddCustomer saveCustomer={saveCustomer} />
-            <AddTraining
-                url={selection.links?.[0].href}
-                name={selection.firstname + ' ' + selection.lastname}
-                saveTraining={saveTraining}
-            />
+            <div id='container'>
+                <CSVExporter customers={customers} />
+                <AddCustomer saveCustomer={saveCustomer} />
+                <AddTraining
+                    url={selection.links?.[0].href}
+                    name={selection.firstname + ' ' + selection.lastname}
+                    saveTraining={saveTraining}
+                />
+            </div>
             <div
                 className='ag-theme-material'
                 style={{
-                    height: '900px',
-                    width: 'auto',
+                    width: '65%',
                     margin: 'auto'}}
             >
                 <AgGridReact
@@ -185,7 +187,6 @@ export default function Customerlist() {
                 autoHideDuration={5000}
                 onClose={handleClose}
                 message={snackMessage}
-                action={deleteCustomer}
             />
         </div>
     );

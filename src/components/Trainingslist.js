@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-material.css';
 import moment from 'moment';
 import 'moment-timezone';
-import { IconButton } from "@mui/material";
+import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Snackbar from '@mui/material/Snackbar';
 
 export default function Trainingslist() {
     const [trainings, setTrainings] = useState([]);
+    const [snackMessage, setSnackMessage] = useState('');
     const [open, setOpen] = useState(false);
 
     useEffect(() => fetchTrainings(), []);
@@ -37,6 +38,7 @@ export default function Trainingslist() {
             fetch('https://customerrest.herokuapp.com/api/trainings/' + id, {method: 'DELETE'})
             .then(res => fetchTrainings())
             .catch(err => console.error(err))
+            setSnackMessage('Training deleted');
             handleClick();
         }
     }
@@ -60,8 +62,14 @@ export default function Trainingslist() {
             sortable: true,
             filter: true,
             floatingFilter: true,
-            valueFormatter: dateFormatter,
-            resizable: true
+            valueFormatter: dateFormatter
+        },
+        {
+            headerName: 'Activity',
+            field: 'activity',
+            sortable: true,
+            filter: true,
+            floatingFilter: true
         },
         {
             headerName: 'Duration (min)',
@@ -69,15 +77,8 @@ export default function Trainingslist() {
             sortable: true,
             filter: true,
             floatingFilter: true,
-            resizable: true
-        },
-        {
-            headerName: 'Activity',
-            field: 'activity',
-            sortable: true,
-            filter: true,
-            floatingFilter: true,
-            resizable: true
+            suppressSizeToFit: true,
+            width: 150
         },
         {
             headerName: 'Customer',
@@ -85,15 +86,14 @@ export default function Trainingslist() {
             valueGetter: fullName,
             sortable: true,
             filter: true,
-            floatingFilter: true,
-            resizable: true
+            floatingFilter: true
         },
         {
             headerName: '',
             field: 'id',
             width: 70,
             cellRenderer: params =>
-                <IconButton color="secondary" onClick={() => deleteTraining(params.value)}>
+                <IconButton color='secondary' onClick={() => deleteTraining(params.value)}>
                     <DeleteIcon />
                 </IconButton>
 
@@ -103,6 +103,9 @@ export default function Trainingslist() {
     const gridOptions = {
         columnDefs: columns,
         animateRows: true,
+        pagination: true,
+        paginationPageSize: 15,
+        domLayout: 'autoHeight',
         onGridReady: _ => sizeToFit()
     }
 
@@ -111,9 +114,9 @@ export default function Trainingslist() {
             <div
                 className='ag-theme-material'
                 style={{
-                    height: '900px',
-                    width: 'auto',
-                    margin: 'auto'}}
+                    width: '65%',
+                    margin: '10px auto auto auto',
+                }}
             >
                 <AgGridReact
                     rowData={trainings}
@@ -122,10 +125,9 @@ export default function Trainingslist() {
             </div>  
             <Snackbar
                 open={open}
-                autoHideDuration={5000}
+                autoHideDuration={4000}
                 onClose={handleClose}
-                message='Training deleted'
-                action={deleteTraining}
+                message={snackMessage}
             />
         </div>
     );

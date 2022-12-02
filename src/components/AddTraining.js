@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import moment from "moment";
+import moment from 'moment';
 
 export default function AddTraining(props) {
     const [open, setOpen] = useState(false);
@@ -15,7 +15,7 @@ export default function AddTraining(props) {
 
       const handleClickOpen = () => {
         if (!props.url) {
-          alert("Select a customer first");
+          alert('Select a customer first');
           return;
         }
         setTraining({
@@ -41,40 +41,40 @@ export default function AddTraining(props) {
 
     return (
         <div>
-            <Button style={{margin: '10px 10px 0px 10px'}} variant="outlined" color="primary" onClick={handleClickOpen}>Add Training</Button>
+            <Button style={{ margin: '10px 10px 0px 10px' }} variant='outlined' color='primary' onClick={handleClickOpen}>Add Training</Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New training for {props.name}</DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus
-                        margin="dense"
-                        name="date"
-                        type="datetime-local"
+                        margin='dense'
+                        name='date'
+                        type='datetime-local'
                         value={training.date}
                         onChange={e => handleInputChange(e)}
-                        label="Date"
+                        label='Date'
                         fullWidth
-                        variant="standard"
+                        variant='standard'
                     />
                     <TextField
                         autoFocus
-                        margin="dense"
-                        name="duration"
+                        margin='dense'
+                        name='duration'
                         value={training.duration}
                         onChange={e => handleInputChange(e)}
-                        label="Duration"
+                        label='Duration'
                         fullWidth
-                        variant="standard"
+                        variant='standard'
                     />
                     <TextField
                         autoFocus
-                        margin="dense"
-                        name="activity"
+                        margin='dense'
+                        name='activity'
                         value={training.activity}
                         onChange={e => handleInputChange(e)}
-                        label="Activity"
+                        label='Activity'
                         fullWidth
-                        variant="standard"
+                        variant='standard'
                     />
                 </DialogContent>
                 <DialogActions>
